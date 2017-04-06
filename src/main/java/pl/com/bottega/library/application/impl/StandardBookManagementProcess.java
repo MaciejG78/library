@@ -62,12 +62,4 @@ public class StandardBookManagementProcess implements BookManagementProcess {
         return bookList;
     }
 
-    @Override
-    public BookInfo show(BookNumber number){
-        BookInfo bookInfo = new BookInfo();
-        Book book = bookRepository.get(number);
-        bookInfo.setBook(book);
-        return bookInfo;
-    }
-
 }

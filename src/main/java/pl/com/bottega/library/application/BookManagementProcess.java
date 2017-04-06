@@ -22,5 +22,4 @@ public interface BookManagementProcess {
 
     BookList listAllBooks();
 
-    BookInfo show(BookNumber number);
 }

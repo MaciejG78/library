@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import pl.com.bottega.library.application.*;
 import pl.com.bottega.library.infrastructure.BookNotFoundException;
@@ -85,17 +84,6 @@ public class BookManagementProcessTest {
 
     @Test
     @Transactional
-    public void shouldShowAvailableBookInfo() {
-        BookNumber number = createBook();
-
-        BookInfo bookInfo = bookManagementProcess.show(number);
-
-        assertThat(bookInfo.getBook().getNumber()).isEqualTo(number);
-        assertThat(bookInfo.getBook().isAvailable()).isEqualTo(true);
-    }
-
-    @Test
-    @Transactional
     public void shouldShouldShowLentBookInfo() {
         BookNumber number = createBook();
         LendingBookCommand cmd = new LendingBookCommand();
@@ -104,10 +92,10 @@ public class BookManagementProcessTest {
         cmd.setNumber(number.getNumber());
         bookLendingProcess.lend(cmd);
 
-        BookInfo bookInfo = bookManagementProcess.show(number);
+        Book book = bookRepository.get(number);
 
-        assertThat(bookInfo.getBook().getNumber()).isEqualTo(number);
-        assertThat(bookInfo.getBook().isAvailable()).isEqualTo(false);
+        assertThat(book.getNumber()).isEqualTo(number);
+        assertThat(book.isAvailable()).isEqualTo(false);
     }
 
     @Test
