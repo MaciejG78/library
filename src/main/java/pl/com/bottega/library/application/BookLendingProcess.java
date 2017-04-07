@@ -1,5 +1,6 @@
 package pl.com.bottega.library.application;
 
+import pl.com.bottega.library.model.BookNumber;
 import pl.com.bottega.library.model.Command.LendingBookCommand;
 
 /**
@@ -8,4 +9,6 @@ import pl.com.bottega.library.model.Command.LendingBookCommand;
 public interface BookLendingProcess {
 
     void lend(LendingBookCommand cmd);
+
+    void giveBack(BookNumber bookNumber);
 }

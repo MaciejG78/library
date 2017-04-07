@@ -84,7 +84,7 @@ public class BookManagementProcessTest {
 
     @Test
     @Transactional
-    public void shouldShouldShowLentBookInfo() {
+    public void shouldLentBook() {
         BookNumber number = createBook();
         LendingBookCommand cmd = new LendingBookCommand();
         cmd.setFirstName("Tolek");
@@ -96,6 +96,23 @@ public class BookManagementProcessTest {
 
         assertThat(book.getNumber()).isEqualTo(number);
         assertThat(book.isAvailable()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void shouldGiveBackBook() {
+        BookNumber number = createBook();
+        LendingBookCommand cmd = new LendingBookCommand();
+        cmd.setFirstName("Tolek");
+        cmd.setLastName("Banan");
+        cmd.setNumber(number.getNumber());
+        bookLendingProcess.lend(cmd);
+        bookLendingProcess.giveBack(number);
+
+        Book book = bookRepository.get(number);
+
+        assertThat(book.getNumber()).isEqualTo(number);
+        assertThat(book.isAvailable()).isEqualTo(true);
     }
 
     @Test

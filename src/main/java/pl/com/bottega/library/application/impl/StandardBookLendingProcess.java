@@ -20,7 +20,14 @@ public class StandardBookLendingProcess implements BookLendingProcess{
 
     @Override
     public void lend(LendingBookCommand cmd) {
-        Book book = bookRepository.get(new BookNumber(cmd.getNumber()));
+        BookNumber bookNumber = new BookNumber(cmd.getNumber());
+        Book book = bookRepository.get(bookNumber);
         book.lend(cmd);
+    }
+
+    @Override
+    public void giveBack(BookNumber bookNumber) {
+        Book book = bookRepository.get(bookNumber);
+        book.giveBack(bookNumber);
     }
 }
